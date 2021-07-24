@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BTR | Service Unavailable</title>
+    <title>WTS | Service Unavailable</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('public/assets/images/favicon.ico')}}">
     <link rel="stylesheet" href="{{asset('public/assets/css/bootstrap.min.css')}}">
     <link href="{{asset('public/assets/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">

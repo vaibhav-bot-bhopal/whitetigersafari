@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BTR | Page Not Found</title>
+    <title>WTS | Page Not Found</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('public/assets/images/favicon.ico')}}">
     <link rel="stylesheet" href="{{asset('public/assets/css/bootstrap.min.css')}}">
     <style>

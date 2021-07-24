@@ -7,8 +7,10 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\VisitController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SuperAdminController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -83,20 +85,37 @@ Auth::routes();
 
 Route::group(['prefix' => 'superadmin', 'middleware' => ['auth', 'isSuperadmin', 'prevent-back-history']], function () {
     // For Super Admin Dashboard
-    Route::get('/dashboard', [SuperAdminController::class, 'index'])->name('dashboard')->middleware('language');
-    Route::get('/role-edit/{id}', [SuperAdminController::class, 'editUserRole'])->name('editUserRole')->middleware('language');
-    Route::put('/role-update/{id}', [SuperAdminController::class, 'updateUserRole'])->name('updateUserRole')->middleware('language');
-    Route::delete('/role-delete/{id}', [SuperAdminController::class, 'deleteUserRole'])->name('deleteUserRole')->middleware('language');
-    Route::get('/changeuserstatus', [SuperAdminController::class, 'changeUserStatus'])->name('changeUserStatus')->middleware('language');
+    Route::get('dashboard', [SuperAdminController::class, 'index'])->name('superadmin.dashboard');
+    Route::get('/role-edit/{id}', [SuperAdminController::class, 'editUserRole'])->name('editUserRole');
+    Route::put('/role-update/{id}', [SuperAdminController::class, 'updateUserRole'])->name('updateUserRole');
+    Route::delete('/role-delete/{id}', [SuperAdminController::class, 'deleteUserRole'])->name('deleteUserRole');
+    Route::get('/changeuserstatus', [SuperAdminController::class, 'changeUserStatus'])->name('changeUserStatus');
+
+    // Account Settings
+    Route::get('profile', [SettingsController::class, 'index'])->name('suadmin.profile')->middleware('language');
+    Route::put('profile-update', [SettingsController::class, 'updateProfile'])->name('suadmin.profile.update')->middleware('language');
+    Route::get('changePassword', [SettingsController::class, 'changePassword'])->name('suadmin.changePassword')->middleware('language');
+    Route::put('updatePassword', [SettingsController::class, 'updatePassword'])->name('suadmin.updatePassword')->middleware('language');
+    Route::get('adminChangePassword/{id}', [SettingsController::class, 'adminChangePassword'])->name('suadmin.changeadminpassword')->middleware('language');
+    Route::put('adminUpdatePassword/{id}', [SettingsController::class, 'adminUpdatePassword'])->name('suadmin.updateadminpassword')->middleware('language');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin', 'prevent-back-history']], function () {
+    // For Dashboard
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard')->middleware('language');
+
     // For Newses Routes
     Route::get('/news', [NewsController::class, 'newsShow'])->name('news_show')->middleware('language');
     Route::post('/news-create', [NewsController::class, 'newsCreate'])->name('news_create')->middleware('language');
     Route::get('/news-edit/{id}', [NewsController::class, 'newsEdit'])->name('news_edit')->middleware('language');
     Route::post('/news-update/{id}', [NewsController::class, 'newsUpdate'])->name('news_update')->middleware('language');
     Route::delete('/news-del/{id}', [NewsController::class, 'newsDelete'])->name('news_delete')->middleware('language');
+
+    // Account Settings
+    Route::get('profile', [SettingsController::class, 'index'])->name('wts.admin.profile')->middleware('language');
+    Route::put('profile-update', [SettingsController::class, 'updateProfile'])->name('wts.admin.profile.update')->middleware('language');
+    Route::get('changePassword', [SettingsController::class, 'changePassword'])->name('wts.admin.changePassword')->middleware('language');
+    Route::put('updatePassword', [SettingsController::class, 'updatePassword'])->name('wts.admin.updatePassword')->middleware('language');
 
     // For Events Routes
     Route::get('/event', [NewsController::class, 'eventShow'])->name('event_show')->middleware('language');

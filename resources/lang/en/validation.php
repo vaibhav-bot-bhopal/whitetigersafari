@@ -138,34 +138,48 @@ return [
 
     'custom' => [
         'n_title' => [
-            'required' => 'The News Title Field is Required !!',
+            'required' => 'The news title tield is required !!',
         ],
         'n_date' => [
-            'required' => 'The News Date Field is Required !!',
+            'required' => 'The news date field is required !!',
         ],
         'n_disc' => [
-            'required' => 'The News Description Field is Required !!',
+            'required' => 'The news description field is required !!',
         ],
         'n_file' => [
-            'required' => 'The News Feature Image Field is Required !!',
+            'image' => 'The news feature field must be an image.',
+            'required' => 'The news feature image field is required !!',
+            'mimes' => 'The news feature image field supported file of type: :values.',
         ],
         'title' => [
-            'required' => 'The Event Title Field is Required !!',
+            'required' => 'The event title field is required !!',
         ],
         'edate' => [
-            'required' => 'The Event Date Field is Required !!',
+            'required' => 'The event date field is required !!',
         ],
         'etime' => [
-            'required' => 'The Event Time Field is Required !!',
+            'required' => 'The event time field is required !!',
         ],
         'place' => [
-            'required' => 'The Event Place Field is Required !!',
+            'required' => 'The event place field is required !!',
         ],
         'e_disc' => [
-            'required' => 'The Event Description Field is Required !!',
+            'required' => 'The event description field is required !!',
         ],
         'image' => [
-            'required' => 'The Event Feature Image Field is Required !!',
+            'required' => 'The event feature image field is required !!',
+        ],
+        'name' => [
+            'required' => 'The name field is required !!',
+        ],
+        'email' => [
+            'required' => 'The email field is required !!',
+        ],
+        'old_password' => [
+            'required' => 'The old password field is required !!',
+        ],
+        'password' => [
+            'required' => 'The password field is required !!',
         ],
     ],
 
