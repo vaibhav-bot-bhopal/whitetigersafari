@@ -78,7 +78,7 @@ class SettingsController extends Controller
 
         $validator = Validator::make($request->all(), [
             'old_password' => 'required',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed|min:8'
         ]);
 
         if ($validator->fails()) {
@@ -96,13 +96,13 @@ class SettingsController extends Controller
                     $user = User::find(Auth::id());
                     $user->password = Hash::make($request->password);
                     $user->save();
-                    // if (session('locale') == 'en') {
-                    return redirect()->back()->with('success', 'Password Successfully Changed.');
-                    // }
+                    if (session('locale') == 'en') {
+                        return redirect()->back()->with('success', 'Password Successfully Changed.');
+                    }
 
-                    // if (session('locale') == 'hi') {
-                    // return redirect()->back()->with('Success', 'पासवर्ड सफलतापूर्वक बदल दिया है।');
-                    // }
+                    if (session('locale') == 'hi') {
+                        return redirect()->back()->with('Success', 'पासवर्ड सफलतापूर्वक बदल दिया है।');
+                    }
 
                     // Auth::logout();
                 } else {

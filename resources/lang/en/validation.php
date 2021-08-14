@@ -147,9 +147,13 @@ return [
             'required' => 'The news description field is required !!',
         ],
         'n_file' => [
-            'image' => 'The news feature field must be an image.',
+            'image' => 'The news feature field must be an image !!',
             'required' => 'The news feature image field is required !!',
             'mimes' => 'The news feature image field supported file of type: :values.',
+        ],
+        'n_file_m.*' => [
+            'image' => 'The other images field must be an image !!',
+            'mimes' => 'The other images field supported file of type: :values.',
         ],
         'title' => [
             'required' => 'The event title field is required !!',
@@ -167,7 +171,13 @@ return [
             'required' => 'The event description field is required !!',
         ],
         'image' => [
+            'image' => 'The event feature image field must be an image !!',
             'required' => 'The event feature image field is required !!',
+            'mimes' => 'The event feature image field supported file of type: :values.',
+        ],
+        'm_image.*' => [
+            'image' => 'The other images field must be an image !!',
+            'mimes' => 'The other images field supported file of type: :values.',
         ],
         'name' => [
             'required' => 'The name field is required !!',
@@ -175,14 +185,21 @@ return [
         'email' => [
             'required' => 'The email field is required !!',
         ],
+        'roles' => [
+            'required' => 'The roles field is required !!',
+        ],
         'old_password' => [
             'required' => 'The old password field is required !!',
         ],
         'password' => [
             'required' => 'The password field is required !!',
+            'confirmed' => "The password confirmation does not match !!",
         ],
     ],
 
+    'min' => [
+        'string' => 'The password must be at least :min characters !!',
+    ],
 
     /*
     |--------------------------------------------------------------------------

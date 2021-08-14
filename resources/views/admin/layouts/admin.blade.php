@@ -280,7 +280,7 @@
 
                             @if (session('locale') == 'en')
                                 <li class="nav-header">ADMIN SYSTEM</li>
-                                <li class="nav-item">
+                                <li class="nav-item {{ ('admin/profile' == request()->path() || 'admin/changePassword' == request()->path()) ? 'menu-open' : '' }}">
                                     <a href="#" class="nav-link">
                                         <i class="nav-icon fas fa-user-cog"></i>
                                         <p>

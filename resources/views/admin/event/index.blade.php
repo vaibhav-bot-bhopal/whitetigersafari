@@ -1,11 +1,7 @@
 @extends('admin.layouts.admin')
 
 @push('css')
-    <style>
-        .error{
-            color:red;
-        }
-    </style>
+
 @endpush
 
 @section('content')
@@ -41,55 +37,72 @@
                             @csrf
                             <div class="form-group">
                                 <label for="title">Event Title</label>
-                                <input type="text" class="form-control mb-2" id="title" name="title" value="{{old('title')}}" >
+                                <input type="text" class="form-control mb-2 @error('title') is-invalid @enderror" id="title" name="title" value="{{old('title')}}" placeholder="Enter Event Title Here">
                                 @error('title')
-                                    <span class="error">{{ $message }}</span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="edate">Event Date</label>
-                                <input type="date" class="form-control mb-2" id="edate" name="edate" value="{{old('edate')}}" >
+                                <input type="date" class="form-control mb-2 @error('edate') is-invalid @enderror" id="edate" name="edate" value="{{old('edate')}}" >
                                 @error('edate')
-                                    <span class="error">{{ $message }}</span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="etime">Event Time</label>
-                                <input type="time" class="form-control mb-2" id="etime" name="etime" value="{{old('etime')}}" >
+                                <input type="time" class="form-control mb-2 @error('etime') is-invalid @enderror" id="etime" name="etime" value="{{old('etime')}}" >
                                 @error('etime')
-                                    <span class="error">{{ $message }}</span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="place">Event Place</label>
-                                <input type="text" class="form-control mb-2" id="place" name="place" value="{{old('place')}}" >
-                                @error('title')
-                                    <span class="error">{{ $message }}</span>
+                                <input type="text" class="form-control mb-2 @error('place') is-invalid @enderror" id="place" name="place" value="{{old('place')}}" placeholder="Enter Event Place Here">
+                                @error('place')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="e_disc">Event Description</label>
-                                <textarea class="ckeditor form-control mb-2" rows="5" id="e_disc" name="e_disc">{{old('e_disc')}}</textarea>
+                                <textarea class="ckeditor form-control mb-2 @error('e_disc') is-invalid @enderror" rows="5" id="e_disc" name="e_disc">{{old('e_disc')}}</textarea>
                                 @error('e_disc')
-                                <span class="error">{{ $message }}</span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
 
                             <div class="form-group">
                             <label> Main Images </label>
-                                <input type="file" class="form-control-file border mb-2" name="image">
+                                <input type="file" class="form-control-file border mb-2 @error('image') is-invalid @enderror" name="image">
                                 @error('image')
-                                <span class="error">{{ $message }}</span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
 
                             <div class="form-group">
                             <label> Other Images </label>
-                                <input type="file" class="form-control-file border" name="m_image[]" multiple>
+                                <input type="file" class="form-control-file border @error('m_image.*') is-invalid @enderror" name="m_image[]" multiple>
+                                @error('m_image.*')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -208,55 +221,72 @@
                             @csrf
                             <div class="form-group">
                                 <label for="title">इवेंट शीर्षक</label>
-                                <input type="text" class="form-control mb-2" id="title" name="title" value="{{old('title')}}" >
+                                <input type="text" class="form-control mb-2 @error('title') is-invalid @enderror" id="title" name="title" value="{{old('title')}}" placeholder="इवेंट का शीर्षक यहां दर्ज करें">
                                 @error('title')
-                                    <span class="error">{{ $message }}</span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="edate">इवेंट तारीख</label>
-                                <input type="date" class="form-control mb-2" id="edate" name="edate" value="{{old('edate')}}" >
+                                <input type="date" class="form-control mb-2 @error('edate') is-invalid @enderror" id="edate" name="edate" value="{{old('edate')}}" >
                                 @error('edate')
-                                    <span class="error">{{ $message }}</span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="etime">इवेंट समय</label>
-                                <input type="time" class="form-control mb-2" id="etime" name="etime" value="{{old('etime')}}" >
+                                <input type="time" class="form-control mb-2 @error('etime') is-invalid @enderror" id="etime" name="etime" value="{{old('etime')}}" >
                                 @error('etime')
-                                    <span class="error">{{ $message }}</span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="place">इवेंट स्थान</label>
-                                <input type="text" class="form-control mb-2" id="place" name="place" value="{{old('place')}}" >
-                                @error('title')
-                                    <span class="error">{{ $message }}</span>
+                                <input type="text" class="form-control mb-2 @error('place') is-invalid @enderror" id="place" name="place" value="{{old('place')}}" placeholder="यहां इवेंट का स्थान दर्ज करें">
+                                @error('place')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="e_disc">इवेंट विवरण</label>
-                                <textarea class="ckeditor form-control mb-2" rows="5" id="e_disc" name="e_disc">{{old('e_disc')}}</textarea>
+                                <textarea class="ckeditor form-control mb-2 @error('e_disc') is-invalid @enderror" rows="5" id="e_disc" name="e_disc">{{old('e_disc')}}</textarea>
                                 @error('e_disc')
-                                <span class="error">{{ $message }}</span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
 
                             <div class="form-group">
                             <label> मुख्य इमेज </label>
-                                <input type="file" class="form-control-file border mb-2" name="image">
+                                <input type="file" class="form-control-file border mb-2 @error('image') is-invalid @enderror" name="image">
                                 @error('image')
-                                <span class="error">{{ $message }}</span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
 
                             <div class="form-group">
                             <label> अन्य इमेज </label>
-                                <input type="file" class="form-control-file border" name="m_image[]" multiple>
+                                <input type="file" class="form-control-file border @error('m_image.*') is-invalid @enderror" name="m_image[]" multiple>
+                                @error('m_image.*')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <button type="submit" class="btn btn-primary">सबमिट</button>
