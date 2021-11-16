@@ -4,22 +4,22 @@
 /*----------------------------
  jQuery MeanMenu
 ------------------------------ */
-	jQuery('nav#dropdown').meanmenu();	
-	
+	jQuery('nav#dropdown').meanmenu();
+
 /*----------------------------
  wow js active
 ------------------------------ */
  new WOW().init();
- 
+
 /*----------------------------
  owl active
------------------------------- */  
+------------------------------ */
   $(".slider-area").owlCarousel({
       autoPlay: true,
 	  dots: true,
 	  slideSpeed:2000,
 	  pagination:false,
-	  navigation:false,	  
+	  navigation:false,
       items : 1,
 	  /* transitionStyle : "fade", */    /* [This code for animation ] */
 	  navigationText:["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"],
@@ -36,15 +36,15 @@
   $(".slide-dots-prev").on('click', function () {
     owl.trigger('owl.prev');
   });
- 
+
 /*----------------------------
 Our Live Camp
------------------------------- */  
+------------------------------ */
 	var owl = $(".total-camp");
   	  owl.owlCarousel({
-      autoPlay: true, 
+      autoPlay: true,
 	  slideSpeed:2000,
-	  pagination:false,  
+	  pagination:false,
       items : 1,
       itemsDesktop : [1199,1],
 	  itemsDesktopSmall : [980,1],
@@ -61,12 +61,12 @@ Our Live Camp
   });
 /*----------------------------
 our animal
------------------------------- */  
+------------------------------ */
   $(".total-area").owlCarousel({
-      autoPlay: true, 
+      autoPlay: true,
 	  slideSpeed:2000,
 	  pagination:false,
-	  navigation:true,	  
+	  navigation:true,
       items : 5,
 	  /* transitionStyle : "fade", */    /* [This code for animation ] */
 	  navigationText:["<i class='fa fa-long-arrow-left'></i>","<i class='fa fa-long-arrow-right'></i>"],
@@ -77,12 +77,12 @@ our animal
   });
  /*----------------------------
 our animal
------------------------------- */  
+------------------------------ */
   $(".map-gallary").owlCarousel({
-      autoPlay: true, 
+      autoPlay: true,
 	  slideSpeed:2000,
 	  pagination:false,
-	  navigation:true,	  
+	  navigation:true,
       items : 5,
 	  /* transitionStyle : "fade", */    /* [This code for animation ] */
 	  navigationText:["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"],
@@ -116,33 +116,33 @@ magnific Popup image
 				return element.find('img');
 			}
 		}
-		
+
 	});
 
 
 /*----------------------------
  price-slider active
------------------------------- */  
+------------------------------ */
 	  $( "#slider-range" ).slider({
 	   range: true,
 	   min: 40,
 	   max: 600,
 	   values: [ 60, 570 ],
 	   slide: function( event, ui ) {
-		$( "#amount" ).val( "£" + ui.values[ 0 ] + " - £" + ui.values[ 1 ] );
+		$( "#amount" ).val( "ï¿½" + ui.values[ 0 ] + " - ï¿½" + ui.values[ 1 ] );
 	   }
 	  });
-	  $( "#amount" ).val( "£" + $( "#slider-range" ).slider( "values", 0 ) +
-	   " - £" + $( "#slider-range" ).slider( "values", 1 ) );  
-	   
+	  $( "#amount" ).val( "ï¿½" + $( "#slider-range" ).slider( "values", 0 ) +
+	   " - ï¿½" + $( "#slider-range" ).slider( "values", 1 ) );
+
 /*----------------------------
 single details
------------------------------- */  
+------------------------------ */
   $(".animal-slider").owlCarousel({
-      autoPlay: true, 
+      autoPlay: true,
 	  slideSpeed:2000,
 	  pagination:false,
-	  navigation:true,	  
+	  navigation:true,
       items : 6,
 	  /* transitionStyle : "fade", */    /* [This code for animation ] */
 	  navigationText:["<i class='fa fa-long-arrow-left'></i>","<i class='fa fa-long-arrow-right'></i>"],
@@ -151,23 +151,41 @@ single details
 	  itemsTablet: [600,2],
 	  itemsMobile : [450,1],
   });
-  
+
  /*------------------------------------
- jquery Serch Box activation code 
+ jquery Serch Box activation code
  --------------------------------------*/
 	 $(".search-icon").on('click', function(){
 	    $(".search-box-area").slideToggle('slow');
 	});
 
-	   
+
 /*--------------------------
  scrollUp
----------------------------- */	
+---------------------------- */
 	$.scrollUp({
         scrollText: '<i class="fa fa-angle-up"></i>',
         easingType: 'linear',
         scrollSpeed: 900,
         animation: 'fade'
-    }); 	   
- 
-})(jQuery); 
+    });
+
+})(jQuery);
+
+
+ /*----------------------------
+  Promos active
+ ------------------------------ */
+ $(".total-promos-area").owlCarousel({
+    autoPlay: true,
+    slideSpeed:2000,
+    pagination:false,
+    navigation:true,
+    items : 3,
+    /* transitionStyle : "fade", */    /* [This code for animation ] */
+    navigationText:["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"],
+    itemsDesktop : [1199,3],
+    itemsDesktopSmall : [980,2],
+    itemsTablet: [720,1],
+    itemsMobile : [479,1],
+});

@@ -42,7 +42,7 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ url('/') }}" target="_blank" class="nav-link">Home</a>
+            <a href="{{ url('/') }}" target="_blank" class="nav-link">Go To Website</a>
             </li>
         </ul>
 
@@ -228,7 +228,7 @@
             $.ajax({
                 type: "GET",
                 dataType: "json",
-                url: 'changeuserstatus',
+                url: 'changeUserStatus',
                 data: {'status': status, 'user_id': user_id},
                 success: function(data){
                     if(status == 0)

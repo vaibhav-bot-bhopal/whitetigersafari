@@ -1,189 +1,126 @@
 @extends('admin.layouts.admin')
 
 @push('css')
-    <style>
-        .error{
-            color:red;
-        }
-    </style>
+
 @endpush
 
 @section('content')
-<!-- Content Header (Page header) -->
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">{{ __('panel.event-edit-h1') }}</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{ __('panel.home') }}</a></li>
+                        <li class="breadcrumb-item active">{{ __('panel.event-edit-h1') }}</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
 
-    @if (session('locale') == 'en')
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">Edit Event</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Edit Event</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
-
-        <!-- Main content -->
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-8 col-md-8 offset-lg-2 offset-md-2">
-
-                        <form action="{{ url('admin/event-update/'.$data->id) }}" method="POST" enctype="multipart/form-data">
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 offset-lg-2 offset-md-2">
+                    <div class="card card-primary card-outline">
+                        <form action="{{ route('events.update', $events->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            <div class="form-group">
-                                <label for="title">Event Title</label>
-                                <input type="text" class="form-control mb-2" id="title" name="title" value="{{$data->title}}">
-                                @error('title')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="title">{{ __('panel.event-title') }}</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{$events->title}}" placeholder="Enter Event Title">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-info far fa-clipboard copy-button" data-clipboard-target="#title" data-toggle="tooltip" data-placement="top" title="Copy to clipboard" style="border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;"></button>
+                                        </span>
+                                        @error('title')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="date">{{ __('panel.event-date') }}</label>
+                                    <input type="date" class="form-control @error('date') is-invalid @enderror" id="date" name="date" value="{{$events->date}}">
+                                    @error('date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="time">{{ __('panel.event-time') }}</label>
+                                    <input type="time" class="form-control @error('time') is-invalid @enderror" id="time" name="time" value="{{ date('H:i', strtotime($events->time)) }}">
+                                    @error('time')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="place">{{ __('panel.event-place') }}</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control @error('place') is-invalid @enderror" id="place" name="place" value="{{$events->place}}" placeholder="Enter Event Place">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-info far fa-clipboard copy-button" data-clipboard-target="#place" data-toggle="tooltip" data-placement="top" title="Copy to clipboard" style="border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;"></button>
+                                        </span>
+                                        @error('place')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="description">{{ __('panel.event-description') }}</label>
+                                    <textarea class="ckeditor form-control @error('description') is-invalid @enderror" rows="5" id="description" name="description">{{$events->description}}</textarea>
+                                    @error('description')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <input type="hidden" name="h_image" value="{{$events->image}}">
+
+                                <div class="form-group">
+                                    <label>{{ __('panel.event-image') }}</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input border @error('image') is-invalid @enderror" name="image">
+                                        <label class="custom-file-label" for="customFile">{{ __('panel.event-image-file') }}</label>
+                                        @error('image')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="edate">Event Date</label>
-                                <input type="date" class="form-control mb-2" id="edate" name="edate" value="{{$data->date}}">
-                                @error('edate')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary"><i class="nav-icon fa fa-pencil-alt" style="margin-right: 5px;"></i>{{ __('panel.event-btn-update') }}</button>
                             </div>
-
-                            <div class="form-group">
-                                <label for="etime">Event Time</label>
-                                <input type="time" class="form-control mb-2" id="etime" name="etime" value="{{$data->time}}">
-                                @error('etime')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="place">Event Place</label>
-                                <input type="text" class="form-control mb-2" id="place" name="place" value="{{$data->place}}">
-                                @error('title')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="e_disc">Event Description</label>
-                                <textarea class="ckeditor form-control mb-2" rows="5" id="e_disc" name="e_disc">{{$data->discription}}</textarea>
-                                @error('e_disc')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <input type="hidden" name="h_file" value="{{$data->image}}">
-                            <div class="form-group">
-                                <input type="file" class="form-control-file border" name="image">
-                                @error('image')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <button type="submit" class="btn btn-primary mb-4">Submit</button>
                         </form>
-
                     </div>
                 </div>
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content -->
-
-    @endif
-
-    @if (session('locale') == 'hi')
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">कार्यक्रम संपादित करें</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">होम</a></li>
-                            <li class="breadcrumb-item active">कार्यक्रम संपादित करें</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
-
-        <!-- Main content -->
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-8 col-md-8 offset-lg-2 offset-md-2">
-
-                        <form action="{{ url('admin/event-update/'.$data->id) }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
-                            <div class="form-group">
-                                <label for="title">इवेंट शीर्षक</label>
-                                <input type="text" class="form-control mb-2" id="title" name="title" value="{{$data->title}}">
-                                @error('title')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="edate">इवेंट तारीख</label>
-                                <input type="date" class="form-control mb-2" id="edate" name="edate" value="{{$data->date}}">
-                                @error('edate')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="etime">इवेंट समय</label>
-                                <input type="time" class="form-control mb-2" id="etime" name="etime" value="{{$data->time}}">
-                                @error('etime')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="place">इवेंट स्थान</label>
-                                <input type="text" class="form-control mb-2" id="place" name="place" value="{{$data->place}}">
-                                @error('title')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="e_disc">इवेंट विवरण</label>
-                                <textarea class="ckeditor form-control mb-2" rows="5" id="e_disc" name="e_disc">{{$data->discription}}</textarea>
-                                @error('e_disc')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <input type="hidden" name="h_file" value="{{$data->image}}">
-                            <div class="form-group">
-                                <input type="file" class="form-control-file border" name="image">
-                                @error('image')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <button type="submit" class="btn btn-primary mb-4">सबमिट</button>
-                        </form>
-
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content -->
-
-    @endif
-
-<!-- /.content-header -->
+            </div>
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
 @endsection
+
+@push('js')
+
+@endpush

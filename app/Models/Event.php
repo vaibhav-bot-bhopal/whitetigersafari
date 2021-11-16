@@ -6,19 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class newsHindi extends Model
+class Event extends Model
 {
     use HasFactory;
 
-    protected $table = 'news_hindis';
+    protected $table = 'events';
 
     protected $fillable = [
-        'news_title',
-        'news_slug',
-        'news_date',
-        'news_discription',
-        'news_image',
-        'm_news_image'
+        'title',
+        'slug',
+        'date',
+        'time',
+        'place',
+        'description',
+        'image',
+        'images',
     ];
 
     use Sluggable;
@@ -31,8 +33,8 @@ class newsHindi extends Model
     public function sluggable(): array
     {
         return [
-            'news_slug' => [
-                'source' => 'n_title'
+            'slug' => [
+                'source' => 'title'
             ]
         ];
     }

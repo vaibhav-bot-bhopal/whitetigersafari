@@ -1213,7 +1213,9 @@ header .search-box-area .search-form a {
     h4
     a:hover {
     /* border-bottom: 2px solid #dcd794; */
-    color: #dcd794;
+    /* color: #dcd794; */
+    /* Added Custom Color */
+    color: #a09833;
 }
 .our-video-content-area .latest-news .single-news-area .media .media-body p {
     margin-bottom: 30px;
@@ -3129,4 +3131,97 @@ FAQ Start Here
 
 .all-h2 {
     font-weight: 600;
+}
+
+/* ------------------------------------
+Zooks Promos Start Here
+---------------------------------------*/
+.zooks-promos-area {
+    padding-bottom: 50px;
+    /* padding: 100px 0; */
+    /* background: #f7f7f7; */
+    overflow: hidden;
+}
+.zooks-promos-area .total-promos-area {
+    margin-top: 30px;
+}
+.zooks-promos-area .total-promos-area .single-promos {
+    margin: 0 15px;
+    position: relative;
+    overflow: hidden;
+}
+.zooks-promos-area .total-promos-area .single-promos a {
+    display: block;
+}
+.zooks-promos-area .total-promos-area .single-promos a img {
+    width: 100%;
+    display: block;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    transform: scale(1);
+}
+.zooks-promos-area .total-promos-area .single-promos a img:hover {
+    transform: scale(1.2);
+}
+.zooks-promos-area .total-promos-area .owl-controls .owl-buttons .owl-prev {
+    background: #f3b832;
+    border: 1px solid #f3b832;
+    border-radius: 0;
+    color: #444444;
+    height: 80px;
+    line-height: 80px;
+    margin: 0;
+    opacity: 1;
+    padding: 0;
+    position: absolute;
+    left: 0px;
+    top: 30%;
+    width: 30px;
+    margin: 0px;
+    transition: all 0.3s;
+    font-size: 20px;
+}
+.zooks-promos-area .total-promos-area .owl-controls .owl-buttons .owl-prev i {
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 30px;
+}
+.zooks-promos-area
+    .total-promos-area
+    .owl-controls
+    .owl-buttons
+    .owl-prev:hover {
+    border: 1px solid #f3b832;
+    color: #ffffff;
+}
+.zooks-promos-area .total-promos-area .owl-controls .owl-buttons .owl-next {
+    background: #f3b832;
+    border: 1px solid #f3b832;
+    border-radius: 0;
+    color: #444444;
+    height: 80px;
+    line-height: 80px;
+    margin: 0;
+    opacity: 1;
+    padding: 0;
+    position: absolute;
+    right: 0px;
+    top: 30%;
+    width: 30px;
+    transition: all 0.3s;
+    font-size: 20px;
+}
+.zooks-promos-area .total-promos-area .owl-controls .owl-buttons .owl-next i {
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 30px;
+}
+.zooks-promos-area
+    .total-promos-area
+    .owl-controls
+    .owl-buttons
+    .owl-next:hover {
+    border: 1px solid #f3b832;
+    color: #ffffff;
 }

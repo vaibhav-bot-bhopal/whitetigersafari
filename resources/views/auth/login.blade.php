@@ -106,7 +106,7 @@
         <!-- /.card-body -->
         <div class="card-footer d-flex flex-column text-center ftr">
             <small><a>Powered By</a></small>
-            <small><a>Blue Ocean Tech Solutions Pvt. Ltd.</a></small>
+            <small><a href="https://blueoceantech.in/" target="_blank">Blue Ocean Tech Solutions Pvt. Ltd.</a></small>
         </div>
         <!-- /.card-footer -->
     </div>

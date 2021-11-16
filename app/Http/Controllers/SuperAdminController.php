@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateAdminProfileRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class SuperAdminController extends Controller
 {
@@ -20,31 +20,33 @@ class SuperAdminController extends Controller
         return view('superadmin.user.edit')->with('user_roles', $user_roles);
     }
 
-    public function updateUserRole(Request $request, $id)
+    public function updateUserRole(UpdateAdminProfileRequest $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|max:50',
-            'email' => 'required|max:50',
-            'roles' => 'required'
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|max:50',
+        //     'email' => 'required|max:50',
+        //     'roles' => 'required'
+        // ]);
 
-        if ($validator->fails()) {
-            return redirect('superadmin/role-edit/' . $id)->withErrors($validator)->withInput();
-        } else {
-            $user = User::find($id);
-            $user->name = $request->input('name');
-            $user->role_as = $request->input('roles');
-            $user->update();
+        // if ($validator->fails()) {
+        //     return redirect()->route('editUserRole', $id)->withErrors($validator)->withInput();
+        //     // return redirect('superadmin/role-edit/' . $id)->withErrors($validator)->withInput();
+        // } else {
+        $user = User::find($id);
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->role_as = $request->input('roles');
+        $user->update();
 
-            return redirect()->back()->with('success', 'User Role has been updated successfully.');
-        }
+        return redirect()->route('superadmin.dashboard')->with('success', 'User Role has been updated successfully.');
+        // }
     }
 
     function deleteUserRole($id)
     {
         $user = User::where('id', $id)->first();
         User::where('id', $id)->delete();
-        return redirect()->back()->with('success', 'User has been deleted successfully.');
+        return redirect()->route('superadmin.dashboard')->with('success', 'User has been deleted successfully.');
     }
 
     public function changeUserStatus(Request $request)

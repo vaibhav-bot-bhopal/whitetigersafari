@@ -1,6 +1,7 @@
 <?php
 return [
-    'language'  =>  'Choose Language',
+    'name'  =>  'White Tiger Safari',
+    'language'  =>  'Language / भाषा',
     'english'  =>  'English',
     'hindi'  =>  'हिन्दी',
     'home' => 'Home',

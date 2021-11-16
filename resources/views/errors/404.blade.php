@@ -29,7 +29,13 @@
 
         <div class="row">
 			<div class="col-lg-12 text-center">
-                <a href="{{url('/')}}" class="btn btn-outline-danger">Go To Home</a>
+                @if (Request::is('admin*'))
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-danger">Go To Dashboard</a>
+                @elseif(Request::is('superadmin*'))
+                    <a href="{{ route('superadmin.dashboard') }}" class="btn btn-outline-danger">Go To Dashboard</a>
+                @else
+                    <a href="{{url('/')}}" class="btn btn-outline-danger">Go To Home</a>
+                @endif
 			</div>
 		</div>
     </div>

@@ -130,75 +130,10 @@ return [
     |
     */
 
-    // 'custom' => [
-    //     'attribute-name' => [
-    //         'rule-name' => 'custom-message',
-    //     ],
-    // ],
-
     'custom' => [
-        'n_title' => [
-            'required' => 'The news title tield is required !!',
+        'attribute-name' => [
+            'rule-name' => 'custom-message',
         ],
-        'n_date' => [
-            'required' => 'The news date field is required !!',
-        ],
-        'n_disc' => [
-            'required' => 'The news description field is required !!',
-        ],
-        'n_file' => [
-            'image' => 'The news feature field must be an image !!',
-            'required' => 'The news feature image field is required !!',
-            'mimes' => 'The news feature image field supported file of type: :values.',
-        ],
-        'n_file_m.*' => [
-            'image' => 'The other images field must be an image !!',
-            'mimes' => 'The other images field supported file of type: :values.',
-        ],
-        'title' => [
-            'required' => 'The event title field is required !!',
-        ],
-        'edate' => [
-            'required' => 'The event date field is required !!',
-        ],
-        'etime' => [
-            'required' => 'The event time field is required !!',
-        ],
-        'place' => [
-            'required' => 'The event place field is required !!',
-        ],
-        'e_disc' => [
-            'required' => 'The event description field is required !!',
-        ],
-        'image' => [
-            'image' => 'The event feature image field must be an image !!',
-            'required' => 'The event feature image field is required !!',
-            'mimes' => 'The event feature image field supported file of type: :values.',
-        ],
-        'm_image.*' => [
-            'image' => 'The other images field must be an image !!',
-            'mimes' => 'The other images field supported file of type: :values.',
-        ],
-        'name' => [
-            'required' => 'The name field is required !!',
-        ],
-        'email' => [
-            'required' => 'The email field is required !!',
-        ],
-        'roles' => [
-            'required' => 'The roles field is required !!',
-        ],
-        'old_password' => [
-            'required' => 'The old password field is required !!',
-        ],
-        'password' => [
-            'required' => 'The password field is required !!',
-            'confirmed' => "The password confirmation does not match !!",
-        ],
-    ],
-
-    'min' => [
-        'string' => 'The password must be at least :min characters !!',
     ],
 
     /*

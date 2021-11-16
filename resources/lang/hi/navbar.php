@@ -1,6 +1,7 @@
 <?php
 return [
-    'language'  =>  'भाषा चुनें',
+    'name'  =>  'व्हाइट टाइगर सफारी',
+    'language'  =>  'Language / भाषा',
     'english'  =>  'English',
     'hindi'  =>  'हिन्दी',
     'home' => 'होम',

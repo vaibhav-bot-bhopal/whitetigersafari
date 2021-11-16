@@ -31,7 +31,13 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
                     <div class="section-title">
-                        <h2>Mammals</h2>
+                        @if (session('locale') == 'en')
+                            <h2>Mammals</h2>
+                        @endif
+
+                        @if (session('locale') == 'hi')
+                            <h2>स्तनीयजन्तु</h2>
+                        @endif
                     </div>
                 </div>
             </div>

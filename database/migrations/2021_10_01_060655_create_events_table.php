@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEventHindisTable extends Migration
+class CreateEventsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateEventHindisTable extends Migration
      */
     public function up()
     {
-        Schema::create('event_hindis', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
             $table->date('date');
             $table->time('time');
             $table->string('place');
-            $table->text('discription');
+            $table->text('description');
             $table->string('image');
-            $table->string('m_image')->nullable();
+            $table->string('images')->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ class CreateEventHindisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event_hindis');
+        Schema::dropIfExists('events');
     }
 }

@@ -1,384 +1,145 @@
 @extends('admin.layouts.admin')
 
 @push('css')
-
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{asset('public/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 @endpush
 
 @section('content')
 
-    <!-- For English Language -->
-    @if (session('locale') == 'en')
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">Add Event</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Add Event</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">{{ __('panel.event-page-h1') }}</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{ __('panel.home') }}</a></li>
+                        <li class="breadcrumb-item active">{{ __('panel.event-page-h1') }}</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
 
-        <!-- Main content -->
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-8 col-md-8 offset-lg-2 offset-md-2">
-                        <div id="myAlert"></div>
-
-                        <form action="{{ url('admin/event-create') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="form-group">
-                                <label for="title">Event Title</label>
-                                <input type="text" class="form-control mb-2 @error('title') is-invalid @enderror" id="title" name="title" value="{{old('title')}}" placeholder="Enter Event Title Here">
-                                @error('title')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="edate">Event Date</label>
-                                <input type="date" class="form-control mb-2 @error('edate') is-invalid @enderror" id="edate" name="edate" value="{{old('edate')}}" >
-                                @error('edate')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="etime">Event Time</label>
-                                <input type="time" class="form-control mb-2 @error('etime') is-invalid @enderror" id="etime" name="etime" value="{{old('etime')}}" >
-                                @error('etime')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="place">Event Place</label>
-                                <input type="text" class="form-control mb-2 @error('place') is-invalid @enderror" id="place" name="place" value="{{old('place')}}" placeholder="Enter Event Place Here">
-                                @error('place')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="e_disc">Event Description</label>
-                                <textarea class="ckeditor form-control mb-2 @error('e_disc') is-invalid @enderror" rows="5" id="e_disc" name="e_disc">{{old('e_disc')}}</textarea>
-                                @error('e_disc')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                            <label> Main Images </label>
-                                <input type="file" class="form-control-file border mb-2 @error('image') is-invalid @enderror" name="image">
-                                @error('image')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                            <label> Other Images </label>
-                                <input type="file" class="form-control-file border @error('m_image.*') is-invalid @enderror" name="m_image[]" multiple>
-                                @error('m_image.*')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-
-                    </div>
-                </div>
-
-                <div class="row mt-4 mb-4">
-                    <div class="col-lg-12 col-md-12">
-                        <div class="table-responsive">
-                        <table class="table table-striped">
-                            <tr>
-                            <th class="text-center">SNo.</th>
-                            <th class="text-center">Title</th>
-                            <th class="text-center">Event Date</th>
-                            <th class="text-center">Event Time</th>
-                            <th class="text-center">Event Place</th>
-                            <th class="text-center">Discription</th>
-                            <th class="text-center">Feature Image</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                            </tr>
-                            @php
-                                $id=1;
-                            @endphp
-                            @forelse($data as $data)
-                            <tr>
-                                <td class="text-center">{{$id}}</td>
-                                <td class="text-center">{{ Str::limit($data->title, '30') }}</td>
-                                <td class="text-center">{{ date('d-M-Y',strtotime($data->date)) }}</td>
-                                <td>{{ date('h:i A',strtotime($data->time)) }}</td>
-                                <td>{{ $data->place }}</td>
-                                <td class="text-justify">{!! Str::limit($data->discription, '300') !!}</td>
-                                <td>
-                                    <img src="{{asset('public/storage/eng_event/'.$data->image)}}" width="200" height="150" class="img-responsive rounded" alt="image">
-                                </td>
-                                <td><a href="{{ url('admin/event-edit') }}/{{$data->id}}" class="btn btn-sm btn-primary">Edit</a></td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-danger" onclick="deleteEvent({{ $data->id }})">Delete</button>
-                                    <form id="delete-form-{{ $data->id }}" action="{{ route('event_delete', $data->id) }}" method="POST" style="display: none;">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
-                                </td>
-                            </tr>
-                            @php
-                                $id++;
-                            @endphp
-
-                            @empty
-                                <tr>
-                                    <td class="text-center p-5" colspan="9"><h5 class="font-weight-bold">Event not found in our record !!</h5></td>
-                                </tr>
-                            @endforelse
-                        </table>
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row pt-4 pb-4">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card card-primary card-outline">
+                        <div class="card-header d-flex">
+                            <h3 class="card-title my-auto" style="font-size: 18px; font-weight: 600;">
+                                {{ __('panel.event-list') }}
+                                <span class="badge badge-info pt-1 pb-1 pl-2 pr-2 ml-1" data-toggle="tooltip" data-placement="top" title="{{ __('panel.event-tooltip') }}" style="font-size: 14px; font-weight: 500;">{{ $events->count() }}</span>
+                            </h3>
+                            <a class="btn btn-sm btn-primary ml-auto" href="{{route('events.create')}}"><i class="nav-icon fas fa-plus-circle" style="margin-right: 5px;"></i>{{ __('panel.event-btn-add') }}</a>
                         </div>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content -->
-
-
-        <!-- Modal -->
-        <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Are you sure, you want to delete this event ?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Cancel</button>
-                        <button type="button" class="btn btn-danger" id="delEvent">Yes, Delete</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
-
-    <!-- For Hindi Language -->
-    @if (session('locale') == 'hi')
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">कार्यक्रम जोड़ें</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">होम</a></li>
-                            <li class="breadcrumb-item active">कार्यक्रम जोड़ें</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
-
-
-        <!-- Main content -->
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row mb-4">
-                    <div class="col-lg-8 col-md-8 offset-lg-2 offset-md-2">
-                        <div id="myAlert"></div>
-
-                        <form action="{{ url('admin/event-create') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="form-group">
-                                <label for="title">इवेंट शीर्षक</label>
-                                <input type="text" class="form-control mb-2 @error('title') is-invalid @enderror" id="title" name="title" value="{{old('title')}}" placeholder="इवेंट का शीर्षक यहां दर्ज करें">
-                                @error('title')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="edate">इवेंट तारीख</label>
-                                <input type="date" class="form-control mb-2 @error('edate') is-invalid @enderror" id="edate" name="edate" value="{{old('edate')}}" >
-                                @error('edate')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="etime">इवेंट समय</label>
-                                <input type="time" class="form-control mb-2 @error('etime') is-invalid @enderror" id="etime" name="etime" value="{{old('etime')}}" >
-                                @error('etime')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="place">इवेंट स्थान</label>
-                                <input type="text" class="form-control mb-2 @error('place') is-invalid @enderror" id="place" name="place" value="{{old('place')}}" placeholder="यहां इवेंट का स्थान दर्ज करें">
-                                @error('place')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="e_disc">इवेंट विवरण</label>
-                                <textarea class="ckeditor form-control mb-2 @error('e_disc') is-invalid @enderror" rows="5" id="e_disc" name="e_disc">{{old('e_disc')}}</textarea>
-                                @error('e_disc')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                            <label> मुख्य इमेज </label>
-                                <input type="file" class="form-control-file border mb-2 @error('image') is-invalid @enderror" name="image">
-                                @error('image')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                            <label> अन्य इमेज </label>
-                                <input type="file" class="form-control-file border @error('m_image.*') is-invalid @enderror" name="m_image[]" multiple>
-                                @error('m_image.*')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">सबमिट</button>
-                        </form>
-
-                    </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-lg-12 col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <tr>
-                                    <th class="text-center">क्रमांक</th>
-                                    <th class="text-center">शीर्षक</th>
-                                    <th class="text-center">तारीख</th>
-                                    <th class="text-center">समय</th>
-                                    <th class="text-center">स्थान</th>
-                                    <th class="text-center">विवरण</th>
-                                    <th class="text-center">मुख्य इमेज</th>
-                                    <th>एडिट</th>
-                                    <th>डिलीट</th>
-                                </tr>
-                                @php
-                                    $id=1;
-                                @endphp
-                                @forelse ($data as $data)
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="tblEvent" class="table table-bordered table-striped">
+                                <thead>
                                     <tr>
-                                        <td class="text-center">{{$id}}</td>
-                                        <td class="text-center">{{ Str::limit($data->title, '30') }}</td>
-                                        <td class="text-center">{{ date('d-M-Y',strtotime($data->date)) }}</td>
-                                        <td>{{ date('h:i A',strtotime($data->time)) }}</td>
-                                        <td>{{ $data->place }}</td>
-                                        <td class="text-justify">{!! Str::limit($data->discription, '300') !!}</td>
-                                        <td>
-                                            <img src="{{asset('public/storage/hin_event/'.$data->image)}}" width="200" height="150" class="img-responsive rounded" alt="image">
-                                        </td>
-                                        <td><a href="{{ url('admin/event-edit') }}/{{$data->id}}" class="btn btn-sm btn-primary">एडिट</a></td>
-                                        <td>
-                                            <button type="button" class="btn btn-sm btn-danger" onclick="deleteEvent({{ $data->id }})">हटाना</button>
-                                            <form id="delete-form-{{ $data->id }}" action="{{ route('event_delete', $data->id) }}" method="POST" style="display: none;">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
-                                        </td>
+                                        <th class="text-center">{{ __('panel.event-tbl-sno') }}</th>
+                                        <th class="text-center">{{ __('panel.event-tbl-title') }}</th>
+                                        <th class="text-center">{{ __('panel.event-tbl-date') }}</th>
+                                        <th class="text-center">{{ __('panel.event-tbl-time') }}</th>
+                                        <th class="text-center">{{ __('panel.event-tbl-place') }}</th>
+                                        <th class="text-center">{{ __('panel.event-tbl-description') }}</th>
+                                        <th class="text-center">{{ __('panel.event-tbl-image') }}</th>
+                                        <th class="text-center">{{ __('panel.event-tbl-action') }}</th>
                                     </tr>
-                                @php
-                                    $id++;
-                                @endphp
+                                </thead>
+                                <tbody>
+                                    @foreach ($events as $key=>$event)
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td class="w-25">{{ Str::limit($event->title, '30') }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($event->date)) }}</td>
+                                            <td>{{ date('h:i A',strtotime($event->time)) }}</td>
+                                            <td>{{ $event->place }}</td>
+                                            <td class="w-50">{!! Str::limit($event->description, 300, '...') !!}</td>
+                                            <td>
+                                                <img src="{{asset('public/storage/event_image/'.$event->image)}}" width="150" height="100" class="img-responsive rounded" alt="image">
+                                            </td>
+                                            <td class="text-center w-25">
+                                                <a href="{{ route('events.edit', $event->id) }}" class="btn btn-sm btn-info"><i class="nav-icon fas fa-edit"></i></a>
 
-                                @empty
-                                    <tr>
-                                        <td class="text-center p-5" colspan="9"><h5 class="font-weight-bold">इवेंट्स हमारे रिकॉर्ड में नहीं मिला !!</h5></td>
-                                    </tr>
-                                @endforelse
+                                                <button type="button" class="btn btn-sm btn-danger" onclick="deleteEvent({{ $event->id }})"><i class="nav-icon fas fa-trash-alt"></i></button>
+                                                <form id="delete-form-{{ $event->id }}" action="{{ route('events.destroy', $event->id) }}" method="POST" style="display: none;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
                             </table>
                         </div>
+                        <!-- /.card-body -->
                     </div>
+                    <!-- /.card -->
                 </div>
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content -->
+            </div>
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
 
 
-        <!-- Modal -->
-        <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">कन्फर्मेशन</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        निश्चित तौर पर क्या इस इवेंट को हटाना चाहते हैं ?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">नहीं, रद्द करें</button>
-                        <button type="button" class="btn btn-danger" id="delEvent">हाँ, हटाएं</button>
-                    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('panel.event-modal-title') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ __('panel.event-modal-body') }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('panel.event-modal-btn-cancel') }}</button>
+                    <button type="button" class="btn btn-danger" id="delEvent">{{ __('panel.event-modal-btn-yes') }}</button>
                 </div>
             </div>
         </div>
-    @endif
-
+    </div>
+    <!-- /. Modal -->
 @endsection
 
 @push('js')
+    <!-- DataTables  & Plugins -->
+    <script src="{{asset('public/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('public/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('public/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{asset('public/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('public/assets/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{asset('public/assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('public/assets/plugins/jszip/jszip.min.js')}}"></script>
+    <script src="{{asset('public/assets/plugins/pdfmake/pdfmake.min.js')}}"></script>
+    <script src="{{asset('public/assets/plugins/pdfmake/vfs_fonts.js')}}"></script>
+    <script src="{{asset('public/assets/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+    <script src="{{asset('public/assets/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+    <script src="{{asset('public/assets/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+    <!-- Page specific script -->
+    <script>
+        $(function () {
+            $("#tblEvent").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#tblEvent_wrapper .col-md-6:eq(0)');
+        });
+    </script>
+
     <script>
         // Delete Function
-
         function deleteEvent(id)
         {
             $("#delModal").modal('show');
@@ -388,5 +149,8 @@
                 document.getElementById('delete-form-'+id).submit();
             });
         }
+
+        //Initialize Tooltip
+        $('[data-toggle=tooltip]').tooltip();
     </script>
 @endpush

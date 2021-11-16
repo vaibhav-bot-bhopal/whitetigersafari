@@ -14,6 +14,7 @@ Dropzone.options.myDropzone = {
     error: function () {
         this.on("error", function (file, response) {
             toastr['error'](response);
+            console.log(response);
         });
     },
 

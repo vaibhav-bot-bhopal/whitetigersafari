@@ -49,13 +49,13 @@
             </li>
             @if (session('locale') == 'en')
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ url('/') }}" class="nav-link" target="_blank">Home</a>
+                    <a href="{{ url('/') }}" class="nav-link" target="_blank">Go To Website</a>
                 </li>
             @endif
 
             @if (session('locale') == 'hi')
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ url('/') }}" class="nav-link" target="_blank">होम</a>
+                    <a href="{{ url('/') }}" class="nav-link" target="_blank">वेबसाइट पर जाएं</a>
                 </li>
             @endif
         </ul>
@@ -64,14 +64,15 @@
         <ul class="navbar-nav ml-auto">
             <!-- Language Dropdown Menu -->
             <li class="nav-item dropdown">
-                @if (Session::has('locale'))
+                <!-- Old Language Switcher -->
+                {{-- @if (Session::has('locale'))
                     @if(session('locale') == 'hi')
                         <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="flag-icon flag-icon-in" style="margin-right: 8px!important"></i>{{ 'Language/भाषा :- हिंदी' }}
+                            <i class="flag-icon flag-icon-in" style="margin-right: 8px!important"></i>{{ 'भाषा :- हिंदी' }}
                         </a>
                     @else
                         <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="flag-icon flag-icon-us" style="margin-right: 8px!important"></i>{{ 'Language/भाषा : English' }}
+                            <i class="flag-icon flag-icon-us" style="margin-right: 8px!important"></i>{{ 'Language : English' }}
                         </a>
                     @endif
                 @else
@@ -79,13 +80,26 @@
                 @endif
 
                 <div class="dropdown-menu dropdown-menu-right p-0">
-
                     <a href="{{url('language/en')}}" class="dropdown-item {{session('locale') == 'en' ? 'active' : ''}}">
                         <i class="flag-icon flag-icon-us mr-2"></i> English
                     </a>
                     <a href="{{url('language/hi')}}" class="dropdown-item {{session('locale') == 'hi' ? 'active' : ''}}">
                         <i class="flag-icon flag-icon-in mr-2"></i> हिंदी
                     </a>
+                </div> --}}
+
+                <!-- New Language Switcher -->
+                <a class="nav-link dropdown-toggle hover bdr" data-toggle="dropdown" href="#">
+                    <img src="{{ asset('public/assets/images/icons/google-translate.png') }}" width="24" height="24" alt="Google-Translate" class="img-fluid"> {{ Config::get('languages')[App::getLocale()]['display'] }}
+                    <span class="caret"></span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right pt-1 pb-1">
+                    @foreach (Config::get('languages') as $lang => $language)
+                        @if ($lang != App::getLocale())
+                            <a class="dropdown-item" href="{{ route('lang.switch', $lang) }}"><span class="flag-icon flag-icon-{{$language['flag-icon']}}" style="margin-right: 8px!important"></span> {{$language['display']}}</a>
+                        @endif
+                    @endforeach
                 </div>
             </li>
 
@@ -161,14 +175,14 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="{{route('news_show')}}" class="brand-link">
+        <a href="{{route('admin.dashboard')}}" class="brand-link">
             <img src="{{ asset('public/assets/images/mukundpur-logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
             @if (session('locale') == 'en')
-                <span class="brand-text font-weight-light">White Tiger Safari</span>
+                <span class="brand-text font-weight-light">{{ __('navbar.name') }}</span>
             @endif
 
             @if (session('locale') == 'hi')
-                <span class="brand-text font-weight-light">व्हाइट टाइगर सफारी</span>
+                <span class="brand-text font-weight-light">{{ __('navbar.name') }}</span>
             @endif
         </a>
 
@@ -188,176 +202,160 @@
                                 <li class="nav-header">मुख्य प्रणाली</li>
                             @endif
 
-                            @if (session('locale') == 'en')
-                                <li class="nav-item">
-                                    <a href="{{ url('admin/dashboard') }}" class="nav-link {{ 'admin/dashboard' == request()->path() ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                                        <p>Dashboard <span class="right badge badge-info">English</span></p>
-                                    </a>
-                                </li>
-                            @endif
+                            @if (Request::is('admin*'))
+                                @if (session('locale') == 'en')
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/dashboard') }}" class="nav-link {{ Request::is('admin/dashboard') ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                                            <p>Dashboard <span class="right badge badge-info">English</span></p>
+                                        </a>
+                                    </li>
+                                @endif
 
-                            @if (session('locale') == 'hi')
-                                <li class="nav-item">
-                                    <a href="{{ url('admin/dashboard') }}" class="nav-link {{ 'admin/dashboard' == request()->path() ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                                        <p>डैशबोर्ड <span class="right badge badge-info">हिंदी</span></p>
-                                    </a>
-                                </li>
-                            @endif
+                                @if (session('locale') == 'hi')
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/dashboard') }}" class="nav-link {{ Request::is('admin/dashboard') ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                                            <p>डैशबोर्ड <span class="right badge badge-info">हिंदी</span></p>
+                                        </a>
+                                    </li>
+                                @endif
 
-                            @if (session('locale') == 'en')
-                                <li class="nav-item">
-                                    <a href="{{ url('admin/news') }}" class="nav-link {{ 'admin/news' == request()->path() ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-newspaper"></i>
-                                        <p>News <span class="right badge badge-danger">English</span></p>
-                                    </a>
-                                </li>
-                            @endif
+                                @if (session('locale') == 'en')
+                                    <li class="nav-item">
+                                        <a href="{{ route('newses.index') }}" class="nav-link {{ Request::is('admin/newses*') ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-newspaper"></i>
+                                            <p>News <span class="right badge badge-danger">English</span></p>
+                                        </a>
+                                    </li>
+                                @endif
 
-                            @if (session('locale') == 'hi')
-                                <li class="nav-item">
-                                    <a href="{{ url('admin/news') }}" class="nav-link {{ 'admin/news' == request()->path() ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-newspaper"></i>
-                                        <p>न्यूज़ <span class="right badge badge-danger">हिंदी</span></p>
-                                    </a>
-                                </li>
-                            @endif
+                                @if (session('locale') == 'hi')
+                                    <li class="nav-item">
+                                        <a href="{{ route('newses.index') }}" class="nav-link {{ Request::is('admin/newses*') ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-newspaper"></i>
+                                            <p>न्यूज़ <span class="right badge badge-danger">हिंदी</span></p>
+                                        </a>
+                                    </li>
+                                @endif
 
-                            @if (session('locale') == 'en')
-                                <li class="nav-item">
-                                    <a href="{{ url('admin/event') }}" class="nav-link {{ 'admin/event' == request()->path() ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-calendar-day"></i>
-                                        <p>Events <span class="right badge badge-warning">English</span></p>
-                                    </a>
-                                </li>
-                            @endif
+                                @if (session('locale') == 'en')
+                                    <li class="nav-item">
+                                        <a href="{{ route('events.index') }}" class="nav-link {{ Request::is('admin/event*') ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-calendar-day"></i>
+                                            <p>Events <span class="right badge badge-warning">English</span></p>
+                                        </a>
+                                    </li>
+                                @endif
 
-                            @if (session('locale') == 'hi')
-                                <li class="nav-item">
-                                    <a href="{{ url('admin/event') }}" class="nav-link {{ 'admin/event' == request()->path() ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-calendar-day"></i>
-                                        <p>इवेंट्स <span class="right badge badge-warning">हिंदी</span></p>
-                                    </a>
-                                </li>
-                            @endif
+                                @if (session('locale') == 'hi')
+                                    <li class="nav-item">
+                                        <a href="{{ route('events.index') }}" class="nav-link {{ Request::is('admin/event*') ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-calendar-day"></i>
+                                            <p>इवेंट्स <span class="right badge badge-warning">हिंदी</span></p>
+                                        </a>
+                                    </li>
+                                @endif
 
-                            @if (session('locale') == 'en')
-                                <li class="nav-item">
-                                    <a href="{{ url('admin/images') }}" class="nav-link {{ 'admin/images' == request()->path() ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-file-upload"></i>
-                                        <p>Upload Gallery <span class="right badge badge-success">English</span></p>
-                                    </a>
-                                </li>
-                            @endif
+                                @if (session('locale') == 'en')
+                                    <li class="nav-item">
+                                        <a href="{{ route('images.index') }}" class="nav-link {{ Request::is('admin/images*') ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-file-image"></i>
+                                            <p>Gallery <span class="right badge badge-success">English</span></p>
+                                        </a>
+                                    </li>
+                                @endif
 
-                            @if (session('locale') == 'hi')
-                                <li class="nav-item">
-                                    <a href="{{ url('admin/images') }}" class="nav-link {{ 'admin/images' == request()->path() ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-file-upload"></i>
-                                        <p>अपलोड गैलरी <span class="right badge badge-success">हिंदी</span></p>
-                                    </a>
-                                </li>
-                            @endif
+                                @if (session('locale') == 'hi')
+                                    <li class="nav-item">
+                                        <a href="{{ route('images.index') }}" class="nav-link {{ Request::is('admin/images*') ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-file-image"></i>
+                                            <p>गैलरी <span class="right badge badge-success">हिंदी</span></p>
+                                        </a>
+                                    </li>
+                                @endif
 
-                            @if (session('locale') == 'en')
-                                <li class="nav-item">
-                                    <a href="{{ url('admin/images-show') }}" class="nav-link {{ 'admin/images-show' == request()->path() ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-eye"></i>
-                                        <p>View Gallery <span class="right badge badge-light">English</span></p>
-                                    </a>
-                                </li>
-                            @endif
+                                @if (session('locale') == 'en')
+                                    <li class="nav-header">ADMIN SYSTEM</li>
+                                    <li class="nav-item {{ Request::is('admin/profile') || Request::is('admin/changePassword') ? 'menu-open' : '' }}">
+                                        <a href="#" class="nav-link">
+                                            <i class="nav-icon fas fa-user-cog"></i>
+                                            <p>
+                                                Admin Settings
+                                                <i class="right fas fa-angle-left"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="{{url('admin/profile')}}" class="nav-link {{ Request::is('admin/profile') ? 'active' : '' }}">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>User Profile</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{url('admin/changePassword')}}" class="nav-link {{ Request::is('admin/changePassword') ? 'active' : '' }}">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Change Password</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @endif
 
-                            @if (session('locale') == 'hi')
-                                <li class="nav-item">
-                                    <a href="{{ url('admin/images-show') }}" class="nav-link {{ 'admin/images-show' == request()->path() ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-eye"></i>
-                                        <p>व्यू गैलरी <span class="right badge badge-light">हिंदी</span></p>
-                                    </a>
-                                </li>
-                            @endif
+                                @if (session('locale') == 'hi')
+                                    <li class="nav-header">व्यवस्थापक प्रणाली</li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="nav-icon fas fa-user-cog"></i>
+                                            <p>
+                                                व्यवस्थापक सेटिंग्स
+                                                <i class="right fas fa-angle-left"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="{{url('admin/profile')}}" class="nav-link {{ Request::is('admin/profile') ? 'active' : '' }}">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>उपयोगकर्ता प्रोफ़ाइल</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{url('admin/changePassword')}}" class="nav-link {{ Request::is('admin/changePassword') ? 'active' : '' }}">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>पासवर्ड बदलें</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @endif
 
-                            @if (session('locale') == 'en')
-                                <li class="nav-header">ADMIN SYSTEM</li>
-                                <li class="nav-item {{ ('admin/profile' == request()->path() || 'admin/changePassword' == request()->path()) ? 'menu-open' : '' }}">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fas fa-user-cog"></i>
+                                @if (session('locale') == 'en')
+                                    <li class="nav-item">
+                                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
+                                        <i class="nav-icon fas fa-sign-out-alt"></i>
                                         <p>
-                                            Admin Settings
-                                            <i class="right fas fa-angle-left"></i>
+                                            Logout
                                         </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="{{url('admin/profile')}}" class="nav-link {{ 'admin/profile' == request()->path() ? 'active' : '' }}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>User Profile</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{url('admin/changePassword')}}" class="nav-link {{ 'admin/changePassword' == request()->path() ? 'active' : '' }}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Change Password</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            @endif
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                @endif
 
-                            @if (session('locale') == 'hi')
-                                <li class="nav-header">व्यवस्थापक प्रणाली</li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fas fa-user-cog"></i>
+                                @if (session('locale') == 'hi')
+                                    <li class="nav-item">
+                                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
+                                        <i class="nav-icon fas fa-sign-out-alt"></i>
                                         <p>
-                                            व्यवस्थापक सेटिंग्स
-                                            <i class="right fas fa-angle-left"></i>
+                                            लॉग आउट
                                         </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="{{url('admin/profile')}}" class="nav-link {{ 'admin/profile' == request()->path() ? 'active' : '' }}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>उपयोगकर्ता प्रोफ़ाइल</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{url('admin/changePassword')}}" class="nav-link {{ 'admin/changePassword' == request()->path() ? 'active' : '' }}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>पासवर्ड बदलें</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            @endif
-
-                            @if (session('locale') == 'en')
-                                <li class="nav-item">
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
-                                    <i class="nav-icon fas fa-sign-out-alt"></i>
-                                    <p>
-                                        Logout
-                                    </p>
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </li>
-                            @endif
-
-                            @if (session('locale') == 'hi')
-                                <li class="nav-item">
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
-                                    <i class="nav-icon fas fa-sign-out-alt"></i>
-                                    <p>
-                                        लॉग आउट
-                                    </p>
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </li>
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                @endif
                             @endif
 
                         </ul>
@@ -411,6 +409,11 @@
 <script src="{{ asset('public/assets/dist/js/adminlte.js') }}"></script>
 <!-- CKEDITOR -->
 <script src="//cdn.ckeditor.com/4.15.1/full/ckeditor.js"></script>
+<!-- Clipboard -->
+<script src="{{ asset('public/assets/js/clipboard.min.js') }}"></script>
+<!-- My Script -->
+<script src="{{ asset('public/assets/js/my-script.js') }}"></script>
+
 <script type="text/javascript">
     $(document).ready(function() {
         //Alert
@@ -445,6 +448,7 @@
 @if(session('success'))
     <script>toastr.success("{!! session('success') !!}")</script>
 @endif
+
 @if(session('error'))
     <script>toastr.error("{!! session('error') !!}")</script>
 @endif

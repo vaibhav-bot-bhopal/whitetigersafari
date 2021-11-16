@@ -4,6 +4,18 @@
 
 @push('css')
     <style>
+        /* Header Top Right Language Bar Hide on Desktop View*/
+        .header-top-right .nav-item {
+            display: none !important;
+        }
+
+        @media only screen and (min-width: 345px) and (max-width: 767px) {
+            /* Hide Language Bar on Mobile View */
+            .mean-container .mean-nav ul li:first-child {
+                display: none!important;
+            }
+        }
+
         header .main-header ul li a{
             color: #dcd794!important;
             font-weight: 600!important;
@@ -96,88 +108,68 @@
     </div>
     <!-- Breadcumb Area End Here -->
 
-    <!-- Main Content Area Start Here -->
-
-    @if (session('locale') == 'en')
-
-        <!-- Single Events Area Start Here -->
-        <div class="single-events-area thrre">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 col-lg-offset-1">
-                        <div class="page-title fouur">
-                        <h2>Latest News</h2>
-                        </div>
+    <!-- Single Events Area Start Here -->
+    <div class="single-events-area thrre">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 col-lg-offset-1">
+                    <div class="page-title fouur">
+                    <h2>{{ __('home.latest-news-h2') }}</h2>
                     </div>
+                </div>
 
-                    <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 col-lg-offset-1">
-                        <div class="events-area">
-                            <div class="images">
-                                <a><img src="{{asset('public/storage/eng_news/'.$detailen->news_image)}}" alt=""></a>
-                            </div>
+                <div class="image-block col-lg-10 col-md-12 col-sm-12 col-xs-12 col-lg-offset-1">
+                    <div class="events-area">
+                        <div class="images image-box">
+                            <figure class="image">
+                                <img src="{{asset('public/storage/news_image/'.$newses->image)}}" class="lazy-image owl-lazy" alt="">
+                            </figure>
+                            <a href="{{asset('public/storage/news_image/'. $newses->image)}}" class="lightbox-image icon" data-fancybox="image"><span class="fa fa-search"></span></a>
+                        </div>
 
-                            <div class="events-details">
-                                <h3><a>{{$detailen->news_title}}</a></h3>
-                                <div class="events-informations">
-                                    <ul>
-                                        <li><i class="fa fa-calendar" aria-hidden="true"></i>  {{date('d-M-Y', strtotime($detailen->news_date))}}</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="events-text">
-                                <p>
-                                    {!! $detailen->news_discription !!}
-                                </p>
+                        <div class="events-details">
+                            <h3><a>{{$newses->title}}</a></h3>
+                            <div class="events-informations">
+                                <ul>
+                                    <li><i class="fa fa-calendar" aria-hidden="true"></i>  {{date('d-M-Y', strtotime($newses->date))}}</li>
+                                </ul>
                             </div>
                         </div>
+
+                        <div class="events-text">
+                            <p>
+                                {!! $newses->description !!}
+                            </p>
+                        </div>
+
+                        <!-- Related Images -->
+                        <div class="zooks-promos-area">
+                            @foreach(explode(',', $newses->images) as $news)@endforeach
+
+                            @if (file_exists('public/storage/news_images/'.$news))
+                                <div class="image-block total-promos-area">
+                                    @foreach(explode(',', $newses->images) as $news)
+                                    <div class="single-promos">
+                                        <div class="image-box">
+                                            <figure class="image">
+                                                <img src="{{asset('public/storage/news_images/'. $news)}}" class="lazy-image owl-lazy" alt="">
+                                                <div class="overlay-box">
+                                                    <ul class="option-box">
+                                                        <li><a href="{{asset('public/storage/news_images/'. $news)}}" class="lightbox-image" data-fancybox="image"><span class="fa fa-search"></span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </figure>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                        <!--End Related Images -->
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Single Events Area End Here -->
-
-    @endif
-
-    @if (session('locale') == 'hi')
-
-        <!-- Single Events Area Start Here -->
-        <div class="single-events-area thrre">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 col-lg-offset-1">
-                        <div class="page-title fouur">
-                        <h2>ताजा खबर</h2>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 col-lg-offset-1">
-                        <div class="events-area">
-                            <div class="images">
-                                <a><img src="{{asset('public/storage/hin_news/'.$detailhi->news_image)}}" alt=""></a>
-                            </div>
-
-                            <div class="events-details">
-                                <h3><a>{{$detailhi->news_title}}</a></h3>
-                                <div class="events-informations">
-                                    <ul>
-                                        <li><i class="fa fa-calendar" aria-hidden="true"></i>  {{date('d-M-Y', strtotime($detailhi->news_date))}}</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="events-text">
-                                <p>
-                                    {!! $detailhi->news_discription !!}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Single Events Area End Here -->
-
-    @endif
-    <!-- Main Content Area End Here -->
+    </div>
+    <!-- Single Events Area End Here -->
 @endsection

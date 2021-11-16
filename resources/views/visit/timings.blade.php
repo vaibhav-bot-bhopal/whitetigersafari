@@ -88,7 +88,7 @@
                             </div>
 
                             <p class="text-center" style="font-weight: 700; font-size: 16px;">
-                                MMSJ White Tiger Safari and Zoo, Mukundpur will remain closed every Sunday as their weekly holiday. In addition to the weekly holiday, Diwali and Holi will also be observed as Public Holiday.
+                                MMSJ White Tiger Safari and Zoo, Mukundpur will remain closed every Wednesday as their weekly holiday. In addition to the weekly holiday, Diwali and Holi will also be observed as Public Holiday.
                             </p>
                         </div>
                     </div>

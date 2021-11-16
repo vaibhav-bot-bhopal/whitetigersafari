@@ -73,85 +73,81 @@
     </div>
     <!-- Breadcumb Area End Here -->
 
-    <!-- Main Content Area Start Here -->
+    <!-- Our Video Content Area Start Here -->
+    <div class="our-video-content-area">
+        <div class="container">
 
-    @if (session('locale') == 'en')
-
-        <!-- Our Video Content Area Start Here -->
-        <div class="our-video-content-area">
-            <div class="container">
-
-                <div class="row latest-news">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-                        <div class="section-title">
-                            <h2>Latest Events</h2>
-                        </div>
+            <div class="row latest-news">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                    <div class="section-title">
+                        <h2>{{ __('home.latest-event-h2') }}</h2>
                     </div>
+                </div>
 
-                    @forelse ($dataen as $item)
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <div class="single-news-area">
-                                <div class="media">
-                                    <a href="#">
-                                        <img class="media-object" src="{{asset('public/storage/eng_event/'.$item->image)}}" alt="Generic placeholder image">
-                                    </a>
+                @forelse ($events as $event)
+                    <div class="image-block col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="single-news-area">
+                            <div class="media">
+                                <div class="image-box">
+                                    <figure class="image">
+                                        <img class="media-object" src="{{asset('public/storage/event_image/'.$event->image)}}" alt="Generic placeholder image">
+                                    </figure>
+                                </div>
 
-                                    <div class="media-body">
-                                        <h4 class="media-heading"><a style="font-size: 22px!important;">{!! Str::limit($item->title, 40, '...') !!}</a></h4>
-                                        <p>{!! Str::limit($item->discription, 150, '...') !!}</p>
-                                        <div class="read-more">
-                                            <a href="{{route('mukundpur.event-details', $item->slug)}}">Read Article</a>
-                                        </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading"><a style="font-size: 22px!important; cursor: default;">{!! Str::limit($event->title, 40, '...') !!}</a></h4>
+                                    <p>{!! Str::limit($event->description, 150, '...') !!}</p>
+                                    <div class="read-more">
+                                        <a href="{{route('mukundpur.event-details', $event->slug)}}">Read Article</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    @empty
-                        <div class="col-lg-12 col-md-12 pb-4">
-                            <div class="card h-100">
-                                <div class="p-2 text-center">
-                                    <h2 style="font-weight: 600">No Event Found !!</h2>
-                                </div><!-- single-post -->
-                            </div><!-- card -->
-                        </div><!-- col-lg-4 col-md-6 -->
-                    @endforelse
-
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-                        <div class="next-prev-button">
-                            @if ($dataen->lastPage() > 1)
-                                <ul>
-
-                                    @if ($dataen->onFirstPage())
-                                        <li><a class="{{ ($dataen->currentPage() == 1) ? 'disabled' : '' }}"><span class="fa fa-long-arrow-left"></span> Prev</a></li>
-                                    @else
-                                        <li><a href="{{$dataen->previousPageUrl()}}"><span class="fa fa-long-arrow-left"></span>Prev</a></li>
-                                    @endif
-
-                                    @for ($i = 1; $i <= $dataen->lastPage(); $i++)
-                                        <li>
-                                            <a class="{{ ($dataen->currentPage() == $i) ? ' active' : '' }}" href="{{ $dataen->url($i) }}">{{ $i }}</a>
-                                        </li>
-                                    @endfor
-
-                                    @if ($dataen->hasMorePages())
-                                        <li><a class="{{ ($dataen->currentPage() == $dataen->lastPage()) ? ' disabled' : '' }}" href="{{$dataen->nextPageUrl()}}"><span class="fa fa-long-arrow-right"></span> Next</a></li>
-                                    @else
-                                        <li><a><span class="fa fa-long-arrow-right"></span>Next</a></li>
-                                    @endif
-
-                                </ul>
-                            @endif
-                        </div>
                     </div>
+                @empty
+                    <div class="col-lg-12 col-md-12 pb-4">
+                        <div class="card h-100">
+                            <div class="p-2 text-center">
+                                <h2 style="font-weight: 600">{{ __('home.event-not-found') }}</h2>
+                            </div><!-- single-post -->
+                        </div><!-- card -->
+                    </div><!-- col-lg-4 col-md-6 -->
+                @endforelse
 
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                    <div class="next-prev-button">
+                        @if ($events->lastPage() > 1)
+                            <ul>
+
+                                @if ($events->onFirstPage())
+                                    <li><a class="{{ ($events->currentPage() == 1) ? 'disabled' : '' }}"><span class="fa fa-long-arrow-left"></span> Prev</a></li>
+                                @else
+                                    <li><a href="{{$events->previousPageUrl()}}"><span class="fa fa-long-arrow-left"></span>Prev</a></li>
+                                @endif
+
+                                @for ($i = 1; $i <= $events->lastPage(); $i++)
+                                    <li>
+                                        <a class="{{ ($events->currentPage() == $i) ? ' active' : '' }}" href="{{ $events->url($i) }}">{{ $i }}</a>
+                                    </li>
+                                @endfor
+
+                                @if ($events->hasMorePages())
+                                    <li><a class="{{ ($events->currentPage() == $events->lastPage()) ? ' disabled' : '' }}" href="{{$events->nextPageUrl()}}"><span class="fa fa-long-arrow-right"></span> Next</a></li>
+                                @else
+                                    <li><a><span class="fa fa-long-arrow-right"></span>Next</a></li>
+                                @endif
+
+                            </ul>
+                        @endif
+                    </div>
                 </div>
+
             </div>
         </div>
-        <!-- Our Video Content Area End Here -->
+    </div>
+    <!-- Our Video Content Area End Here -->
 
-    @endif
-
-    @if (session('locale') == 'hi')
+    {{-- @if (session('locale') == 'hi')
 
         <!-- Our Video Content Area Start Here -->
         <div class="our-video-content-area">
@@ -164,19 +160,19 @@
                         </div>
                     </div>
 
-                    @forelse ($datahi as $item)
+                    @forelse ($events as $event)
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                             <div class="single-news-area">
                                 <div class="media">
                                     <a href="#">
-                                        <img class="media-object" src="{{asset('public/storage/hin_event/'.$item->image)}}" alt="Generic placeholder image">
+                                        <img class="media-object" src="{{asset('public/storage/event_image/'.$event->image)}}" alt="Generic placeholder image">
                                     </a>
 
                                     <div class="media-body">
-                                        <h4 class="media-heading"><a style="font-size: 22px!important;">{!! Str::limit($item->title, 40, '...') !!}</a></h4>
-                                        <p>{!! Str::limit($item->discription, 150, '...') !!}</p>
+                                        <h4 class="media-heading"><a style="font-size: 22px!important;">{!! Str::limit($event->title, 40, '...') !!}</a></h4>
+                                        <p>{!! Str::limit($event->discription, 150, '...') !!}</p>
                                         <div class="read-more">
-                                            <a href="{{route('mukundpur.event-details', $item->slug)}}">लेख पढ़ें</a>
+                                            <a href="{{route('mukundpur.event-details', $event->slug)}}">लेख पढ़ें</a>
                                         </div>
                                     </div>
                                 </div>
@@ -194,27 +190,26 @@
 
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
                         <div class="next-prev-button">
-                            @if ($datahi->lastPage() > 1)
+                            @if ($events->lastPage() > 1)
                                 <ul>
 
-                                    @if ($datahi->onFirstPage())
-                                        <li><a class="{{ ($datahi->currentPage() == 1) ? 'disabled' : '' }}"><span class="fa fa-long-arrow-left"></span> Prev</a></li>
+                                    @if ($events->onFirstPage())
+                                        <li><a class="{{ ($events->currentPage() == 1) ? 'disabled' : '' }}"><span class="fa fa-long-arrow-left"></span> Prev</a></li>
                                     @else
-                                        <li><a href="{{$datahi->previousPageUrl()}}"><span class="fa fa-long-arrow-left"></span>Prev</a></li>
+                                        <li><a href="{{$events->previousPageUrl()}}"><span class="fa fa-long-arrow-left"></span>Prev</a></li>
                                     @endif
 
-                                    @for ($i = 1; $i <= $datahi->lastPage(); $i++)
+                                    @for ($i = 1; $i <= $events->lastPage(); $i++)
                                         <li>
-                                            <a class="{{ ($datahi->currentPage() == $i) ? ' active' : '' }}" href="{{ $datahi->url($i) }}">{{ $i }}</a>
+                                            <a class="{{ ($events->currentPage() == $i) ? ' active' : '' }}" href="{{ $events->url($i) }}">{{ $i }}</a>
                                         </li>
                                     @endfor
 
-                                    @if ($datahi->hasMorePages())
-                                        <li><a class="{{ ($datahi->currentPage() == $datahi->lastPage()) ? ' disabled' : '' }}" href="{{$datahi->nextPageUrl()}}"><span class="fa fa-long-arrow-right"></span> Next</a></li>
+                                    @if ($events->hasMorePages())
+                                        <li><a class="{{ ($events->currentPage() == $events->lastPage()) ? ' disabled' : '' }}" href="{{$events->nextPageUrl()}}"><span class="fa fa-long-arrow-right"></span> Next</a></li>
                                     @else
                                         <li><a><span class="fa fa-long-arrow-right"></span>Next</a></li>
                                     @endif
-
                                 </ul>
                             @endif
                         </div>
@@ -225,6 +220,5 @@
         </div>
         <!-- Our Video Content Area End Here -->
 
-    @endif
-    <!-- Main Content Area End Here -->
+    @endif --}}
 @endsection

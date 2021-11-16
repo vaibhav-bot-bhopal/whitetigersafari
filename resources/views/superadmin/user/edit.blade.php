@@ -1,25 +1,28 @@
 @extends('superadmin.layouts.master')
 
 @section('content')
-    <style>
-        .error{
-            color:red;
-        }
-    </style>
-
     <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Edit Admin</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{route('superadmin.dashboard')}}">Home</a></li>
+                        <li class="breadcrumb-item active">Edit Admin</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
     <div class="content-header">
-        <!-- your code start here  -->
         <div class="row">
-            <div class="col-lg-10 col-md-10 offset-lg-1 offset-md-1 col-sm-12 mt-5">
-                {{-- @if(session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{session('success')}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                @endif --}}
+            <div class="col-lg-10 col-md-10 offset-lg-1 offset-md-1 col-sm-12">
                 <div class="card">
                     <h5 class="card-header d-flex">Current Role : {{$user_roles->role_as}}
                         @if($user_roles->status == '0')
@@ -29,7 +32,7 @@
                         @endif
                     </h5>
                     <div class="card-body">
-                        <form action="{{url('superadmin/role-update/'.$user_roles->id)}}" method="POST">
+                        <form action="{{ route('updateUserRole', $user_roles->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="form-group row">
@@ -71,7 +74,7 @@
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-secondary">UPDATE</button>
-                                <a href="{{url('superadmin/dashboard')}}" class="btn btn-warning">BACK</a>
+                                <a href="{{ route('superadmin.dashboard') }}" class="btn btn-warning">BACK</a>
                             </div>
                         </form>
                     </div>
@@ -80,4 +83,5 @@
         </div>
         <!-- your code end here  -->
     </div>
+    <!-- /.content -->
 @endsection
